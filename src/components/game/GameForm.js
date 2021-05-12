@@ -4,7 +4,6 @@ import { useHistory, useParams } from 'react-router-dom'
 
 
 export const GameForm = () => {
-    debugger
     const history = useHistory()
     
     const { createGame, getGameTypes, gameTypes, getGameById, updateGame } = useContext(GameContext)
