@@ -14,14 +14,48 @@ export const GameForm = () => {
         title: "",
         game_type_id: 0
     })
-    useEffect(() => {
-        getGameTypes().then(()=>{
-            if(gameId){
-                getGameById(gameId).then(setCurrentGame)
-            }
+
+const handleSaveGame = () =>{
+    if (gameId) {
+        updateGame({
+            id: gameId,
+            skillLevel: parseInt(currentGame.skillLevel),
+            numberOfPlayers: parseInt(currentGame.numberOfPlayers),
+            title: currentGame.title,
+            maker: currentGame.maker,
+            gameTypeId: parseInt(currentGame.gameTypeId)
         })
+        .then(() => history.push("/"))
+    } else {
+        createGame({
+            skillLevel: parseInt(currentGame.skillLevel),
+            numberOfPlayers: parseInt(currentGame.numberOfPlayers),
+            title: currentGame.title,
+            maker: currentGame.maker,
+            gameTypeId: parseInt(currentGame.gameTypeId)
+        })
+        .then(() => history.push("/"))
+    }
+}
+
+    useEffect(() => {
+        getGameTypes()
     }, [])
 
+    useEffect(() => {
+        if (gameId) {
+            getGameById(gameId)
+                .then(game => {
+                    setCurrentGame({
+                        skillLevel: game.skill_level,
+                        numberOfPlayers: game.number_of_players,
+                        title: game.title,
+                        maker: game.maker,
+                        gameTypeId: game.game_type.id
+                    })
+                })
+        }
+    }, [gameId])
     const handleInputChange = (e) => {
         const tempGame = {...currentGame}
         tempGame[e.target.name] = e.target.value
@@ -91,19 +125,9 @@ export const GameForm = () => {
         <button type="submit"
             onClick={evt => {
                 evt.preventDefault()
-                const game = 
-                // Prevent form from being submitted
-                {
-                    title: currentGame.title,
-                    maker: currentGame.maker,
-                    numberOfPlayers: parseInt(currentGame.numberOfPlayers),
-                    skillLevel: parseInt(currentGame.skillLevel),
-                    game_type_id: parseInt(currentGame.game_type_id)
-
-                }
+                handleSaveGame()
 
                 // Send POST request to your API
-                    createGame(game).then(() => history.push("/"))
                 }
             }
             className="btn btn-primary">{gameId?"Edit":"Create"}</button>
