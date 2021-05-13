@@ -56,6 +56,8 @@ const handleSaveGame = () =>{
                 })
         }
     }, [gameId])
+
+
     const handleInputChange = (e) => {
         const tempGame = {...currentGame}
         tempGame[e.target.name] = e.target.value
@@ -103,10 +105,8 @@ const handleSaveGame = () =>{
         </fieldset>
         <fieldset>
             <div className="form-group">
-                <label htmlFor="game_type_id">GameType: </label>
-                <select name="game_type_id" className="form-control"
-                    value={currentGame.game_type_id}
-                    onChange={handleInputChange}>
+                <label htmlFor="gameType">GameType: </label>
+                <select name="gameType" className="form-control" value={currentGame.gameTypeId}onChange={handleInputChange}>
                     <option value="0">Select a Game Type</option>
                     {gameTypes.map(gameType => (
                         <option key={gameType.id} value={gameType.id}>

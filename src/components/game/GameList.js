@@ -22,6 +22,7 @@ export const GameList = (props) => {
                         <div className="game__title">{game.title} by {game.maker}</div>
                         <div className="game__players">{game.number_of_players} players needed</div>
                         <div className="game__skillLevel">Skill level is {game.skill_level}</div>
+                        <div className="game__gameType">Game Type: {game.game_type.label}</div>
                         <button className="btn btn-2 btn-sep icon-create"
                             onClick={() => {
                             history.push(`/games/${game.id}/edit`)
